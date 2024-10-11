@@ -25,13 +25,11 @@ export const App: React.FC = () => {
   };
 
   const handleChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
+    setFilterValue(event.target.value);
 
-    setFilterValue(value);
+    debouncedSetFilterValue(event.target.value);
 
-    debouncedSetFilterValue(value);
-
-    if (selectedPerson && value) {
+    if (selectedPerson && event.target.value) {
       setSelectedPerson(null);
     }
 
@@ -51,13 +49,11 @@ export const App: React.FC = () => {
   return (
     <div className="container">
       <main className="section is-flex is-flex-direction-column">
-        {selectedPerson && (
+        {selectedPerson ? (
           <h1 className="title" data-cy="title">
             {`${selectedPerson?.name} (${selectedPerson?.born} - ${selectedPerson?.died})`}
           </h1>
-        )}
-
-        {!selectedPerson && (
+        ) : (
           <h1 className="title" data-cy="title">
             No selected person
           </h1>
